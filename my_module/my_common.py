@@ -77,8 +77,44 @@ def my_common_kill_process_with_thread(self, process_list=None):
     print 'end:%s' % ctime()
 
 
+def my_commom_compare_obj(self, before_obj_list, after_obj_list, fault, obj):
+    '''
+    故障前后，对象比较
+    :param self:
+    :param before_obj: 字典类型，故障前对象的信息
+    :param after_obj: 字典类型，故障后对象的信息
+    :param fault: 故障动作
+    :param obj: 对象名
+    :return:bool值，True表示比较结果相同，False表示比较结果不相同
+    '''
+    # 故障前后，对象属性逐个比较
+    for before_obj, after_obj in zip(before_obj_list, after_obj_list):
+        print 'before_obj:', before_obj
+        print 'after_obj:', after_obj
+        for obj_param, obj_param in zip(before_obj, after_obj):
+            if before_obj[obj_param] != after_obj[obj_param]:
+                print u'%s故障前后，存在不一致的属性， 如下：' % fault
+                print u'%s的属性:%s， 预期值：%s, 实际值：%s' % (obj, obj_param, before_obj[obj_param], after_obj[obj_param])
+                return False
+            else:
+                return True
 
-
+def my_common_print_all_compare_result(self, result_dict=None):
+    '''
+    故障前后，打印所有不一致的对象，并抛出异常
+    :param self:
+    :param result_dict:字典类型：{对象类型：比较结果}
+    存放对象比较结果
+    :return:None
+    '''
+    # 过滤掉所有故障前后，相同的对象
+    for key, value in result_dict.items():
+        if value == True:
+            result_dict.pop(key)
+    # 打印所有故障前后不一致的对象
+    if not all(result_dict.values()):
+        print '故障前后，不一致的对象有：', result_dict.keys()
+        raise ValueError('故障前后，对象的信息不一致')
 
 
 
