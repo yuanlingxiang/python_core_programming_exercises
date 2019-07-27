@@ -77,7 +77,7 @@ def my_common_kill_process_with_thread(self, process_list=None):
     print 'end:%s' % ctime()
 
 
-def my_commom_compare_obj(self, before_obj_list, after_obj_list, fault, obj):
+def my_commom_compare_obj(self, before_obj, after_obj, fault, obj):
     '''
     故障前后，对象比较
     :param self:
@@ -88,16 +88,15 @@ def my_commom_compare_obj(self, before_obj_list, after_obj_list, fault, obj):
     :return:bool值，True表示比较结果相同，False表示比较结果不相同
     '''
     # 故障前后，对象属性逐个比较
-    for before_obj, after_obj in zip(before_obj_list, after_obj_list):
-        print 'before_obj:', before_obj
-        print 'after_obj:', after_obj
-        for obj_param, obj_param in zip(before_obj, after_obj):
-            if before_obj[obj_param] != after_obj[obj_param]:
-                print u'%s故障前后，存在不一致的属性， 如下：' % fault
-                print u'%s的属性:%s， 预期值：%s, 实际值：%s' % (obj, obj_param, before_obj[obj_param], after_obj[obj_param])
-                return False
-            else:
-                return True
+    print u'%s故障前:%s' % (obj, before_obj)
+    print u'%s故障后:%s:' % (obj, after_obj)
+    for obj_param, obj_param in zip(before_obj, after_obj):
+        if before_obj[obj_param] != after_obj[obj_param]:
+            print u'%s故障前后，存在不一致的属性， 如下：' % fault
+            print u'%s的属性:%s， 预期值：%s, 实际值：%s' % (obj, obj_param, before_obj[obj_param], after_obj[obj_param])
+            return False
+        else:
+            return True
 
 def my_common_print_all_compare_result(self, result_dict=None):
     '''
