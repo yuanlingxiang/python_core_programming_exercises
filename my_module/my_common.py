@@ -73,9 +73,6 @@ def my_common_kill_process_with_thread(self, process_list=None):
     for i in range(process_num):
         threads[i].join()
 
-    # 主线程
-    print 'end:%s' % ctime()
-
 
 def my_commom_compare_obj(self, before_obj, after_obj, fault, obj):
     '''
